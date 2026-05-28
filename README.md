@@ -45,6 +45,16 @@ ros2 launch nav2 nav2.launch.py map:=/path/to/map.yaml
 ros2 launch nav2 nav2_rtabmap_rgbd.launch.py
 ```
 
+**SLAM 定位导航：**
+```bash
+ros2 launch nav2 slam_location_nav2_launch.py
+```
+
+如需指定 Nav2 参数文件：
+```bash
+ros2 launch nav2 slam_location_nav2_launch.py params:=/path/to/nav2_params.yaml
+```
+
 ## 详细使用
 
 ### 目录结构
@@ -55,8 +65,9 @@ nav2/
 │   ├── jdbot_k3_diff.yaml      # 差速驱动导航参数
 │   └── rgbd_nav2_params.yaml   # RGBD 导航参数
 ├── launch/
-│   ├── nav2.launch.py              # 基础导航启动
-│   └── nav2_rtabmap_rgbd.launch.py # RTAB-Map RGBD 导航启动
+│   ├── nav2.launch.py                  # 基础导航启动
+│   ├── nav2_rtabmap_rgbd.launch.py     # RTAB-Map RGBD 导航启动
+│   └── slam_location_nav2_launch.py    # SLAM 定位导航启动
 └── map/                            # 地图文件目录
 ```
 
@@ -71,11 +82,22 @@ nav2/
 
 ### 启动参数
 
+`nav2.launch.py`：
+
 | 参数 | 默认值 | 说明 |
 |------|--------|------|
 | `map` | `map/my_map.yaml` | 地图文件路径 |
 | `params` | `config/jdbot_k3_diff.yaml` | 导航参数文件 |
 | `use_sim_time` | `false` | 是否使用仿真时间 |
+
+`slam_location_nav2_launch.py`：
+
+| 参数 | 默认值 | 说明 |
+|------|--------|------|
+| `params` | `config/jdbot_k3_diff.yaml` | Nav2 参数文件完整路径 |
+| `use_sim_time` | `false` | 是否使用仿真时间 |
+
+该启动文件会调用 `nav2_bringup` 的 `navigation_launch.py`，适用于外部 SLAM/定位节点已经提供 `map -> odom` 等 TF 以及地图相关数据的场景；它只启动 Nav2 导航相关节点，不加载静态地图文件，也不负责启动 SLAM 节点。
 
 ## 常见问题
 
