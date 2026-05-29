@@ -1,0 +1,37 @@
+## Copyright (C) 2026 SpacemiT (Hangzhou) Technology Co. Ltd.
+## SPDX-License-Identifier: Apache-2.0
+
+module: middleware/ros2/planning/nav2
+
+tests:
+  - name: nav2-waypoint-contract
+    description: >-
+      Verifies autonomous patrol converts camera arguments, generates square
+      waypoints with normalized yaw quaternions, and preserves remaining
+      waypoints when a patrol stop command cancels an active task.
+    category: functional
+    scopes: [pr]
+    timeout_s: 60
+    workdir: sdk
+    requires:
+      commands: [bash, python3]
+    artifacts:
+      - output/test/pr/middleware__ros2__planning__nav2/modules/middleware__ros2__planning__nav2/logs/nav2_waypoint_contract.log
+    command: |
+      bash middleware/ros2/planning/nav2/tests/test_waypoint_contract.sh
+
+  - name: nav2-zmq-timeout
+    description: >-
+      Verifies the round-trip grab task reports a failed wait when the expected
+      ZMQ completion message never arrives, exercising the no-response error
+      path without requiring a robot or gripper device.
+    category: functional
+    scopes: [pr]
+    timeout_s: 60
+    workdir: sdk
+    requires:
+      commands: [bash, python3]
+    artifacts:
+      - output/test/pr/middleware__ros2__planning__nav2/modules/middleware__ros2__planning__nav2/logs/nav2_zmq_timeout.log
+    command: |
+      bash middleware/ros2/planning/nav2/tests/test_zmq_timeout.sh
