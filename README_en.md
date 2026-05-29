@@ -45,6 +45,16 @@ ros2 launch nav2 nav2.launch.py map:=/path/to/map.yaml
 ros2 launch nav2 nav2_rtabmap_rgbd.launch.py
 ```
 
+**SLAM Localization Navigation:**
+```bash
+ros2 launch nav2 slam_location_nav2_launch.py
+```
+
+To specify a custom Nav2 parameters file:
+```bash
+ros2 launch nav2 slam_location_nav2_launch.py params:=/path/to/nav2_params.yaml
+```
+
 ## Detailed Usage
 
 ### Directory Structure
@@ -55,8 +65,9 @@ nav2/
 │   ├── jdbot_k3_diff.yaml      # Differential drive navigation parameters
 │   └── rgbd_nav2_params.yaml   # RGBD navigation parameters
 ├── launch/
-│   ├── nav2.launch.py              # Basic navigation launch
-│   └── nav2_rtabmap_rgbd.launch.py # RTAB-Map RGBD navigation launch
+│   ├── nav2.launch.py                  # Basic navigation launch
+│   ├── nav2_rtabmap_rgbd.launch.py     # RTAB-Map RGBD navigation launch
+│   └── slam_location_nav2_launch.py    # SLAM localization navigation launch
 └── map/                            # Map files directory
 ```
 
@@ -71,11 +82,22 @@ nav2/
 
 ### Launch Arguments
 
+`nav2.launch.py`:
+
 | Parameter | Default | Description |
 |-----------|---------|-------------|
 | `map` | `map/my_map.yaml` | Path to map file |
 | `params` | `config/jdbot_k3_diff.yaml` | Navigation parameters file |
 | `use_sim_time` | `false` | Whether to use simulation time |
+
+`slam_location_nav2_launch.py`:
+
+| Parameter | Default | Description |
+|-----------|---------|-------------|
+| `params` | `config/jdbot_k3_diff.yaml` | Full path to the Nav2 parameters file |
+| `use_sim_time` | `false` | Whether to use simulation time |
+
+This launch file includes `navigation_launch.py` from `nav2_bringup`. It is intended for scenarios where external SLAM/localization nodes already provide TF such as `map -> odom` and map-related data. It only starts Nav2 navigation nodes, and does not load a static map file or start SLAM nodes.
 
 ## FAQ
 

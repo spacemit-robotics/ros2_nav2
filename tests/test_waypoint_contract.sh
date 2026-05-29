@@ -3,7 +3,7 @@ set -euo pipefail
 
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 module_root="$(cd "$script_dir/.." && pwd)"
-artifact_dir="${SROBOTIS_TEST_ARTIFACT_DIR:-${SROBOTIS_OUTPUT_ROOT:-$PWD/output}/test-artifacts/middleware/ros2/planning/nav2/${SROBOTIS_TEST_NAME:-nav2-waypoint-contract}}"
+artifact_dir="${SROBOTIS_TEST_ARTIFACT_DIR:-${SROBOTIS_OUTPUT_ROOT:-$PWD/output}/test/pr/middleware__ros2__planning__nav2/modules/middleware__ros2__planning__nav2}"
 log_dir="$artifact_dir/logs"
 log_file="$log_dir/nav2_waypoint_contract.log"
 
